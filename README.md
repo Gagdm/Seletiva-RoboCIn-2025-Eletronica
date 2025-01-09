@@ -23,6 +23,7 @@
 6- Schematic (.SchDoc) ➡️ Properties ➡️ Panels ➡️ Manufacturer Part Search ➡️ Procura o componente pelo nome
 
 Após a escolha do componente e do fornecedor,
+
 7- Component ➡️ Place 
 > o esquemático do componente será colocado no arquivo Schematic.
 
