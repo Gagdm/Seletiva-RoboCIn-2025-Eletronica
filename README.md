@@ -38,3 +38,24 @@ Right click ➡️ Place ➡️ Note
 ### Criando símbolos e partes -
 
 1- Schematic Library (double click on it)
+
+2- Place ➡️ Escolhe a forma que o símbolo terá ➡️ Cria a "caixa" do símbolo
+
+3- Place ➡️ Pin
+> No X é onde vocẽ pode fazer conexões elétricas com o Pin.
+> O mais importante é sempre colocar o Pin na grade.
+
+4- Coloque o Pin, juntamente com a caixa criada, na coordenada (0,0)
+> Caso o pino esteja sobrepondo o bloco: Click on the block ➡️ Edit ➡️ Move ➡️ Send to back
+
+5- Properties ➡️ Supplier Links ➡️ Add Supplier Links ➡️ Add o TE Internal # do produto ➡️ OK ➡️ Ok
+
+6- Properties ➡️ edit the information about the item created
+
+7- Properties ➡️ Add ➡️ Parameter (definindo a conexão)
+
+8- Add ➡️ Parameter (Manufacturer product number)
+
+9- Add ➡️ Link
+
+10- Save all
