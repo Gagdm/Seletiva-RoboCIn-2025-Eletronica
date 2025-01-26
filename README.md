@@ -60,3 +60,38 @@ $$
 - CBOOT? (0,1µF): Capacitor de bootstrap,fornecendo a energia necessária para acionar o MOSFET superior (high-side) durante o chaveamento, além de ser carregado toda vez que o MOSFET inferior (low-side) está conduzindo.
 - RBOOT? (2Ω): Resistor em série com o capacitor de bootstrap, limitando a corrente para evitar danos ao capacitor ou ao circuito do regulador.
 > O capacitor de bootstrap carrega uma tensão suficiente para abrir o MOSFET superior. Sem ele, o regulador não conseguiria operar eficientemente em topologias buck.
+
+---
+
+### 🟣
+- Conecta a carga ao circuito regulador e fornece a energia estabilizada.
+
+#### Componentes
+- JOUT?: Conector de saída para o dispositivo ou circuito que será alimentado.
+- Indutor (2,2µH): Componente fundamental em circuitos buck, uma vez que armazena energia durante o ciclo de chaveamento e libera energia para a carga durante o período off do MOSFET superior. Além disso, auxilia os capacitores a suaviza a corrente de saída.
+- COUTA, COUTB, COUTC (47uF): Conjunto de capacitores eletrolíticos que estabilizam a tensão de saída e reduzem o ripple (ondulação), de forma conjunta com o indutor.
+> O indutor trabalha em conjunto com os capacitores para garantir uma corrente constante para a carga, eliminando ondulações excessivas.
+
+---
+
+### 🟠
+- Este é o coração do circuito, onde ocorre a conversão DC-DC do tipo buck. O regulador reduz a tensão de entrada para um valor de saída menor, controlando o fluxo de energia por meio de chaveamento.
+
+#### Componentes
+- IC Regulador Buck SIC437: Realiza a conversão de tensão utilizando MOSFETs internos que alternam entre condução e corte em alta frequência.
+
+---
+
+### 🟤
+- Fornece suporte à tensão de VDRVVDRV, que alimenta os drivers internos dos MOSFETs do conversor.
+
+#### Componentes
+- CVDRV (4,7uF): É o capacitor conectado ao pino VDRV, que fornece energia aos drivers internos para alternar os MOSFETs. Os drivers alternam rapidamente em cada ciclo (frequência de comutação) e consomem corrente pulsante proporcional à carga de porta total dos MOSFETs.
+
+---
+
+### ⚫
+-
+
+#### Componentes
+-
