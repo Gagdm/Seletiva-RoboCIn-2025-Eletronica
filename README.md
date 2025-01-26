@@ -1,61 +1,75 @@
-# DESENVOLVER UM REGULADOR DE TENSÃO DC-DC
-> O conversor DC-DC é utilizado quando a tensão disponível é originária de uma fonte de alimentação DC (pilhas, bateria, retificador) e a carga (placa de desenvolvimento, circuito ou componente) exige um valor diferente de tensão para seu funcionamento.
-> Mini Regulador de Tensão MP1584 Step Down é um módulo de tamanho reduzido ideal para utilização em projetos embarcados, projetos de IoT e aeromodelismo, entre outros. Além disso, aceita entradas entre 4,5 e 28 V e a saídas entre 0,8 e20 V, sendo a tensão de saída regulada através do trimpot da placa.
+# Conversor DC-DC com SIC437A
 
-## Tutorial Altium -
+Este projeto implementa um conversor buck baseado no controlador SIC437A da Vishay, projetado para converter uma entrada de 25,2V em uma saída regulada de 5V com capacidade de fornecer até 12A. 
 
-1- Workspace ➡️ File ➡️ New ➡️ Project
+## Objetivo
+O objetivo deste projeto é apresentar o design de um circuito de conversor DC-DC de alta eficiência, considerando os cálculos necessários para os componentes como resistores, capacitores e indutores, garantindo confiabilidade e desempenho.
 
-2- Project ➡️ Add New to project ➡️ Schematic
+---
 
-3- Project ➡️ Add New to project ➡️ PCB
->PCB é achar partes, juntando elas e colocando elas em uma placa impressa com partes mecânicas. Então, precisamos de partes e as encontraremos nas bibliotecas.
+## Cálculos dos Componentes
 
-### Como add uma biblioteca -
+### 1. **Capacitores de Saída (COUT_Cer)**
+- **Quantidade:** 3 capacitores de 47µF (cerâmicos, X7R, 16V).
+- **Capacitância Total:** 
+  \[ C_{total} = 3 \times 47\,\mu F = 141\,\mu F \]
+- **Ripple de Corrente Necessário:**
+  \[ I_{ripple} = \frac{\Delta I_L}{2} \times \sqrt{3} = \frac{5,5\,A}{2} \times \sqrt{3} \approx 4,76\,A \]  
+  Cada capacitor deve suportar pelo menos \( 4,76\,A \).
+- **Tensão de Operação:** Deve ser maior que o VOUT, ou seja, **16V** é suficiente.
 
-4- Project ➡️ Add New to project ➡️ Schematic Library
-> isso será a biblioteca de símbolos, ainda é necessário uma biblioteca para as partes mecânicas.
+### 2. **Capacitores de Entrada (CIN_B)**
+- **Capacitância Necessária:**
+  \[ C_{IN} = \frac{I_{out}}{f \times \Delta V_{IN}} \approx \frac{12}{500\,kHz \times 0,1} = 240\,\mu F \]
+  Utilizou-se um capacitor de 150µF + capacitores cerâmicos para suportar o ripple de corrente.
+- **Ripple de Corrente Necessário:** Aproximadamente **6A**.
+- **Tensão de Operação:** Deve suportar o VIN máx de **25,2V**, então escolheu-se capacitores de **30V**.
 
-5- Project ➡️ Add New to project ➡️ PCB Library
+### 3. **Indutor (L1)**
+- **Indutância Calculada:**
+  \[ L = \frac{(V_{in} - V_{out}) \times D}{\Delta I_L \times f} \approx \frac{(25,2 - 5) \times 0,8}{5,5 \times 500\,kHz} \approx 2,91\,\mu H \]  
+  Escolheu-se um indutor de **2,2µH** considerando margens de segurança.
+- **Corrente Máxima:** Deve suportar a corrente média de saída (12A) + \( \Delta I_L / 2 \), ou seja, pelo menos **14A**.
 
-### Iniciando o Schematic -
+### 4. **Resistores do Divisor de Tensão (RFB1 e RFB2)**
+- **Relação de Resistores:**
+  \[ \frac{R_{FB1}}{R_{FB2}} = \frac{V_{out}}{V_{ref}} - 1 \approx \frac{5}{0,6} - 1 = 7,33 \]
+  Selecionados:
+  - \( R_{FB1} = 73,2k\,\Omega \)
+  - \( R_{FB2} = 10k\,\Omega \)
+- **Potência Dissipada:**
+  \[ P = \frac{V_{out}^2}{R} \approx \frac{5^2}{73,2k} \approx 0,34\,mW \]
+  Resistor com potência de 0,125W é suficiente.
 
-6- Schematic (.SchDoc) ➡️ Properties ➡️ Panels ➡️ Manufacturer Part Search ➡️ Procura o componente pelo nome
+### 5. **Resistores de Configuração (RM1 e RM2)**
+- **Valores Escolhidos:**
+  - \( R_{M1} = 100k\,\Omega \)
+  - \( R_{M2} = 499k\,\Omega \)
+- **Potência Dissipada:**
+  Negligenciável devido ao baixo consumo no pino de configuração.
 
-Após a escolha do componente e do fornecedor,
+### 6. **Resistor de Pull-Up (RPG)**
+- **Valor Selecionado:**
+  \( R_{PG} = 100k\,\Omega \).
+- **Potência Dissipada:**
+  \[ P = \frac{V_{PG}^2}{R} = \frac{5^2}{100k} \approx 0,25\,mW \]
 
-7- Component ➡️ Place 
-> o esquemático do componente será colocado no arquivo Schematic.
+### 7. **Capacitores CVDD e CVDRV**
+- **Valores:**
+  - CVDD: 1µF, **16V**.
+  - CVDRV: 4,7µF, **16V**.
+- **Ripple de Corrente:** Ambos suportam corrente de ripple mínima devido à função de desacoplamento.
 
-O processo (6 e 7) se repetem para qualquer componente desejado.
+### 8. **Resistores de Enable (RenH e RenL)**
+- **Valores:**
+  - RenH: 562kΩ.
+  - RenL: 309kΩ.
+- **Potência Dissipada:**
+  \[ P = \frac{V_{in}^2}{R} \]
+  - RenH: \( \frac{25,2^2}{562k} \approx 1,13\,mW \).
+  - RenL: \( \frac{25,2^2}{309k} \approx 2,05\,mW \).
 
-Boa prática, 
-Double click on a component ➡️ colocar no lugar do nome informações importantes
+---
 
-Para deixar recados para recordar mais tarde,
-Right click ➡️ Place ➡️ Note
-
-### Criando símbolos e partes -
-
-1- Schematic Library (double click on it)
-
-2- Place ➡️ Escolhe a forma que o símbolo terá ➡️ Cria a "caixa" do símbolo
-
-3- Place ➡️ Pin
-> No X é onde vocẽ pode fazer conexões elétricas com o Pin.
-> O mais importante é sempre colocar o Pin na grade.
-
-4- Coloque o Pin, juntamente com a caixa criada, na coordenada (0,0)
-> Caso o pino esteja sobrepondo o bloco: Click on the block ➡️ Edit ➡️ Move ➡️ Send to back
-
-5- Properties ➡️ Supplier Links ➡️ Add Supplier Links ➡️ Add o TE Internal # do produto ➡️ OK ➡️ Ok
-
-6- Properties ➡️ edit the information about the item created
-
-7- Properties ➡️ Add ➡️ Parameter (definindo a conexão)
-
-8- Add ➡️ Parameter (Manufacturer product number)
-
-9- Add ➡️ Link
-
-10- Save all
+## Conclusão
+Os cálculos apresentados garantem que todos os componentes foram selecionados para atender aos requisitos de desempenho do circuito, considerando eficiência, dissipação de potência e segurança dos componentes.
