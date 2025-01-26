@@ -7,5 +7,38 @@ Desenvolver um regulador DC-DC, utilizando a ferramenta Altium Designer, que rec
 
 ---
 
+![Echematic](https://github.com/user-attachments/assets/016dffe6-f8ea-4f01-96c6-930d55ef53fd)
 
-Planejo aprofundar mais a teoria na apresentação
+---
+
+### 🟡
+- Esta seção é responsável por receber a alimentação do circuito, filtrá-la e garantir uma entrada limpa e estável para o regulador de tensão.
+
+#### Componentes
+- JIN? : Um conector para a entrada de alimentação.
+- CINB? (150uF): Capacitor de desacoplamento o qual remove ruídos transitórios, como picos de tensão causados pela fonte ou pelo chaveamento do regulador.
+- CIND? (0,1uF): Também um capacitor de desacoplamento, trabalhando em conjunto com CINB? para aumentar a eficiência do filtro, abordando diferentes faixas de frequências indesejadas.
+> No geral, Esses capacitores garantem que a tensão entregue ao regulador seja o mais estável possível, evitando ruídos que possam interferir no funcionamento do circuito.
+
+---
+
+### 🔴
+- Formam um divisor de tensão que define a tensão de saída (VOUT) do regulador e alimentam o pino de feedback (FB), permitindo ao controlador ajustar o ciclo de trabalho (duty cycle) para manter a saída estável.
+
+#### Componentes
+- Os resistores RFB1 (73,2kΩ) e RFB2 (10kΩ) dividem a tensão de saída (VOUT) para gerar um sinal proporcional que é enviado ao pino FB do regulador.
+
+$$
+RFB1 = \frac{FRB2 (V_{out} - V_{FB})}{V_{FB}}
+$$
+
+Temos, Vout = 5V, RFB1 = 10kΩ e Vfb = 0,6V (RFB1 e Vfb são definidos no datasheet do SIC437). Portanto,
+
+$$
+RFB1 = \frac{10.10^{3} (5 - 0,6)}{0,6} \simeq 73.333Ω \simeq 73,2kΩ
+$$
+
+- COUTD (0,1uF): Reduz ruídos de alta frequência na saída do regulador, ajudando a garantir uma tensão limpa e estável.
+> Resumidamente, Permitem que o regulador monitore e ajuste a tensão de saída para mantê-la estável, além de determinam a tensão de saída por meio do divisor resistivo.
+
+
