@@ -91,7 +91,7 @@ $$
 ---
 
 ### ⚫
-- trabalham juntos para garantir o funcionamento estável, seguro e configurável do regulador DC-DC.
+- Trabalham juntos para garantir o funcionamento estável, seguro e configurável do regulador DC-DC.
 
 #### Componentes
 - CVDD (1uF): Estabilizar e filtrar a alimentação interna do regulador, reduzindo ruídos e garantindo o funcionamento correto do circuito interno, atuando como uma fonte de energia local para suavizar variações instantâneas de corrente demandadas pelos circuitos internos (como drivers de gate e lógica de controle).
