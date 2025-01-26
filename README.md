@@ -41,4 +41,22 @@ $$
 - COUTD (0,1uF): Reduz ruídos de alta frequência na saída do regulador, ajudando a garantir uma tensão limpa e estável.
 > Resumidamente, Permitem que o regulador monitore e ajuste a tensão de saída para mantê-la estável, além de determinam a tensão de saída por meio do divisor resistivo.
 
+---
 
+### 🟢
+- Divisor de Tensão, esses resistores formam um divisor de tensão entre VIN (tensão de entrada) e o pino EN do regulador. O objetivo é garantir que o regulador seja habilitado somente quando a tensão de entrada atinge um valor mínimo seguro, prevenindo operação em condições inadequadas.
+
+#### Componentes
+- RenH (562kΩ)
+- RenL (309kΩ)
+> De forma geral, Funcionam como um divisor de tensão e proteção contra subvoltagem.
+
+---
+
+### 🔵 
+- Esta parte auxilia o circuito de chaveamento do regulador, especialmente para operar o MOSFET superior em um regulador buck.
+
+#### Componentes
+- CBOOT? (0,1µF): Capacitor de bootstrap,fornecendo a energia necessária para acionar o MOSFET superior (high-side) durante o chaveamento, além de ser carregado toda vez que o MOSFET inferior (low-side) está conduzindo.
+- RBOOT? (2Ω): Resistor em série com o capacitor de bootstrap, limitando a corrente para evitar danos ao capacitor ou ao circuito do regulador.
+> O capacitor de bootstrap carrega uma tensão suficiente para abrir o MOSFET superior. Sem ele, o regulador não conseguiria operar eficientemente em topologias buck.
